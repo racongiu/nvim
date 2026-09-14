@@ -9,23 +9,8 @@ if vim.fn.executable("tree-sitter") == 1 then
 		"cpp",
 		"lua",
 		"python",
-		"javascript",
-		"typescript",
-		"tsx",
-		"json",
-		"css",
-		"scss",
-		"html",
-		"yaml",
-		"toml",
-		"dockerfile",
 	})
 end
-
--- no dedicated jsonc parser on the main branch: reuse the json one
-vim.treesitter.language.register("json", "jsonc")
--- compound yaml filetypes share the yaml parser
-vim.treesitter.language.register("yaml", { "yaml.docker-compose", "yaml.ansible" })
 
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("treesitter-highlight", { clear = true }),

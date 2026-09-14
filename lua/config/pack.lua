@@ -27,7 +27,6 @@ function pack.init()
 		-- prebuilt fuzzy binary itself (no build step, no blink.lib)
 		{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
 		{ src = "https://github.com/rafamadriz/friendly-snippets" },
-		{ src = "https://github.com/b0o/SchemaStore.nvim" }, -- data only, used by lsp/jsonls.lua
 		{ src = "https://github.com/mason-org/mason.nvim" },
 		{ src = "https://github.com/stevearc/conform.nvim" },
 		{ src = "https://github.com/mfussenegger/nvim-lint" },
