@@ -58,8 +58,8 @@ require("mini.cursorword").setup()
 local cmp = require("blink.cmp")
 local icons = require("utils.icons")
 
--- v1 on a release tag: the prebuilt fuzzy binary is downloaded
--- automatically, no build step needed (v2's cmp.build() does not exist)
+-- blink.cmp v1 on a release tag downloads its prebuilt fuzzy binary
+-- itself: no build step needed
 
 cmp.setup({
 	-- 'default' preset: <C-y> accept, <C-space> menu/docs, <C-e> hide, <C-n>/<C-p> select

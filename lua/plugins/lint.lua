@@ -17,7 +17,7 @@ local function lint(buf)
 	end
 	if linters and #linters > 0 then
 		vim.b[buf].active_linter = table.concat(linters, ", ") -- read by the statusline
-		require("lint").try_lint(linters)
+		require("lint").try_lint(linters, { ignore_errors = true }) -- missing binary or crash: no notification
 	else
 		vim.b[buf].active_linter = nil
 	end
@@ -53,10 +53,8 @@ vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
 	end,
 })
 
--- On-demand re-lint: nvim-lint otherwise only fires on the events above, so a
--- manual conform format (<leader>cf, async, no write) leaves stale diagnostics
--- on screen and a stale active_linter in the statusline until the next
--- :w/InsertLeave. plugins/format.lua emits this once a manual format finishes.
+-- On-demand re-lint, emitted by plugins/format.lua once a manual format finishes
+-- (the debounced TextChanged autocmd above also covers it, 300 ms later).
 vim.api.nvim_create_autocmd("User", {
 	pattern = "LintRefresh",
 	group = group,

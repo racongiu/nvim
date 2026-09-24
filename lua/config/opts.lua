@@ -3,6 +3,9 @@ local opts = {}
 function opts.init()
 	local opt = vim.opt
 
+	-- .h = C (Neovim defaults to cpp: headers would get clang-format and no norminette)
+	vim.g.c_syntax_for_h = true
+
 	-- Unused providers (:h provider)
 	vim.g.loaded_node_provider = 0
 	vim.g.loaded_perl_provider = 0
@@ -25,7 +28,7 @@ function opts.init()
 	opt.laststatus = 3
 	opt.cmdheight = 0
 
-	-- Indentation (overridden by after/ftplugin/)
+	-- Indentation
 	opt.tabstop = 4
 	opt.softtabstop = 4
 	opt.shiftwidth = 4

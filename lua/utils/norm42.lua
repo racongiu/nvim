@@ -1,5 +1,5 @@
 -- 42 norm tool definitions (norminette + c_formatter_42), consumed by
--- plugins/lang/c.lua when the normc42 toggle (config/langs.lua) is on.
+-- plugins/lang/c.lua for C projects without a .clang-format.
 -- Binaries come from PATH, not mason: pipx install norminette c-formatter-42
 local M = {}
 

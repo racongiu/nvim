@@ -1,6 +1,6 @@
 local commands = {}
 
--- NOTE: temporary, :PackUpdate and :PackDel become builtin commands in nvim 0.13
+-- NOTE: temporary; nvim 0.13 ships builtin :packupdate / :packdel (lowercase)
 function commands.init()
 	vim.api.nvim_create_user_command("PackUpdate", function(o)
 		vim.pack.update(#o.fargs > 0 and o.fargs or nil)

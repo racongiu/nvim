@@ -1,11 +1,9 @@
--- clangd: clang-tidy runs inside the server (--clang-tidy), honoring the
--- project's .clang-tidy. Project awareness needs compile_commands.json.
+-- clangd (C and C++). On by default, no flag needed: clang-tidy (follows the
+-- project's .clang-tidy), background indexing, one completion item per overload.
+-- Project awareness needs compile_commands.json.
 return {
 	cmd = {
 		"clangd",
-		"--background-index", -- index the whole project, not just open files
-		"--clang-tidy",
-		"--completion-style=detailed", -- one entry per overload
 		"--header-insertion=never",
 		"--function-arg-placeholders=0",
 	},

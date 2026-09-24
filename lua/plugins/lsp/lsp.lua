@@ -24,7 +24,7 @@ vim.diagnostic.config({
 local servers, tools, seen = {}, {}, {}
 for _, lang in ipairs(require("utils.langs").list()) do
 	for _, server in ipairs(lang.lsp or {}) do
-		if not seen[server] then -- a server may be shared by several langs (yamlls)
+		if not seen[server] then -- a server may be shared by several langs
 			seen[server] = true
 			servers[#servers + 1] = server
 		end
