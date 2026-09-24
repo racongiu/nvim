@@ -11,12 +11,12 @@ function keymaps.init()
 	keymap.set("n", "<right>", "<nop>", { silent = true })
 	keymap.set("n", "q", "<nop>", { silent = true }) -- no macros
 
-	keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down", silent = true })
-	keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up", silent = true })
+	keymap.set("x", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down", silent = true })
+	keymap.set("x", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up", silent = true })
 	keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
 
-	keymap.set("v", "<", "<gv", { desc = "Unindent and keep selection" })
-	keymap.set("v", ">", ">gv", { desc = "Indent and keep selection" })
+	keymap.set("x", "<", "<gv", { desc = "Unindent and keep selection" })
+	keymap.set("x", ">", ">gv", { desc = "Indent and keep selection" })
 
 	keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch", silent = true })
 

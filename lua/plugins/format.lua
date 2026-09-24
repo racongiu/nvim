@@ -23,7 +23,7 @@ require("conform").setup({
 -- gq goes through conform too (otherwise Neovim wires it to LSP formatting)
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
-vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+vim.keymap.set({ "n", "x" }, "<leader>cf", function()
 	require("conform").format({ async = true }, function(err)
 		-- re-lint right away (the debounced TextChanged autocmd in plugins/lint.lua
 		-- would also re-lint, 300 ms later)

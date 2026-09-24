@@ -30,14 +30,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "<leader>ct", vim.lsp.buf.type_definition, "Type Definition")
 
 		-- Actions
-		map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code Action")
+		map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "Code Action")
 		map("n", "<leader>cR", vim.lsp.buf.rename, "Rename Symbol")
-		map("n", "<leader>co", function()
-			vim.lsp.buf.code_action({
-				context = { only = { "source.organizeImports" }, diagnostics = {} },
-				apply = true,
-			})
-		end, "Organize Imports")
 
 		-- Symbols (document symbols live on <leader>fs, in the Find group)
 		map("n", "<leader>cws", function()

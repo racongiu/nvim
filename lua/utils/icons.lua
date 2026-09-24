@@ -8,26 +8,12 @@ M.diagnostics = {
 	hint = "ℹ️",
 }
 
--- gitsigns gutter glyphs
+-- gitsigns gutter glyphs (delete/topdelete: gitsigns defaults)
 M.git = {
 	add = "▎",
 	change = "▎",
-	delete = "",
-	topdelete = "",
 	changedelete = "▎",
 	untracked = "▎",
-}
-
--- per-file git status (snacks explorer)
-M.git_status = {
-	added = "✚",
-	modified = "",
-	deleted = "✖",
-	renamed = "󰁕",
-	untracked = "",
-	ignored = "",
-	staged = "",
-	unmerged = "",
 }
 
 -- fold gutter glyphs ('fillchars', see the folds section of plugins/coding.lua)
@@ -54,7 +40,6 @@ M.kinds = {
 	Method = "󰆧 ",
 	Property = "󰜢 ",
 	Field = "󰜢 ",
-	Constructor = " ",
 	Enum = "󰕘 ",
 	Interface = "󰕘 ",
 	Function = "󰊕 ",
@@ -67,9 +52,7 @@ M.kinds = {
 	Object = "󰅩 ",
 	Key = "󰌋 ",
 	Null = "󰟢 ",
-	EnumMember = " ",
 	Struct = "󰌗 ",
-	Event = " ",
 	Operator = "󰆕 ",
 	TypeParameter = "󰊄 ",
 }

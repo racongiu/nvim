@@ -6,18 +6,38 @@ local M = {}
 -- conform definition: c_formatter_42 reads stdin, writes stdout
 M.c_formatter_42 = { command = "c_formatter_42", args = {}, stdin = true }
 
+-- norminette reports a VISUAL column (a tab advances to the next multiple of
+-- 4, 1-based); Neovim wants a 0-based byte index into the buffer line.
+local function byte_col(bufnr, lnum, vcol)
+	local line = vim.api.nvim_buf_get_lines(bufnr, lnum, lnum + 1, false)[1] or ""
+	local vc = 1
+	for i = 1, #line do
+		if vc >= vcol then
+			return i - 1
+		end
+		vc = line:sub(i, i) == "\t" and vc + 4 - (vc - 1) % 4 or vc + 1
+	end
+	return #line
+end
+
 -- norminette output: `Error: NAME (line: N, col: N):\tmessage` (1-based).
+-- Errors without a position (e.g. PARSING_ERROR) are put on line 1 instead of
+-- being dropped. The `file.c: Error!` header never matches (its name has a dot).
 -- "Error" fails the norm (WARN); "Notice" is informational only, like
 -- GLOBAL_VAR_DETECTED (INFO) -- the file status stays OK with notices.
-local function parse_norminette(output)
+local function parse_norminette(output, bufnr)
 	local diagnostics = {}
 	for _, line in ipairs(vim.split(output, "\n")) do
 		local level, error_name, lnum, col, message =
 			line:match("^(%a+):%s*([%w_]+)%s*%(line:%s*(%d+),%s*col:%s*(%d+)%):%s*(.*)$")
-		if level and error_name and lnum and col then
+		if not level then
+			level, error_name, message = line:match("^(%a+):%s*([%w_]+)%s+(.*)$")
+		end
+		if level == "Error" or level == "Notice" then
+			local l = lnum and tonumber(lnum) - 1 or 0
 			table.insert(diagnostics, {
-				lnum = tonumber(lnum) - 1,
-				col = tonumber(col) - 1,
+				lnum = l,
+				col = col and byte_col(bufnr, l, tonumber(col)) or 0,
 				message = vim.trim(message),
 				code = error_name,
 				severity = (level == "Notice") and vim.diagnostic.severity.INFO

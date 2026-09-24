@@ -19,26 +19,25 @@ require("snacks").setup({
 		enabled = true,
 		preset = {
 			keys = {
-				{ icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-				{ icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-				{ icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-				{ icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-				{ icon = " ", key = "p", desc = "Projects", action = ":lua Snacks.picker.projects()" },
+				{ key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+				{ key = "n", desc = "New File", action = ":ene | startinsert" },
+				{ key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+				{ key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+				{ key = "p", desc = "Projects", action = ":lua Snacks.picker.projects()" },
 				{
-					icon = " ",
 					key = "c",
 					desc = "Config",
 					action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
 				},
-				{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
+				{ key = "q", desc = "Quit", action = ":qa" },
 			},
 			header = require("utils.logos").random(),
 		},
 		sections = {
 			{ section = "header", pane = 2 },
 			{ section = "keys", indent = 1, padding = 1 },
-			{ section = "projects", icon = " ", title = "Projects", indent = 3, padding = 2 },
-			{ section = "recent_files", icon = " ", title = "Recent Files", indent = 3, padding = 2 },
+			{ section = "projects", title = "Projects", indent = 3, padding = 2 },
+			{ section = "recent_files", title = "Recent Files", indent = 3, padding = 2 },
 			-- startup time, measured from _G.START_TIME (init.lua)
 			function()
 				local ms = math.floor((vim.uv.hrtime() - (_G.START_TIME or vim.uv.hrtime())) / 1e6 + 0.5)
@@ -57,7 +56,6 @@ require("snacks").setup({
 			explorer = { hidden = true, ignored = false },
 		},
 		icons = {
-			git = icons.git_status,
 			kinds = icons.kinds,
 			diagnostics = {
 				Error = icons.diagnostics.error,
