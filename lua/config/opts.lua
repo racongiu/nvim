@@ -26,7 +26,6 @@ function opts.init()
 	opt.scrolloff = 8
 	opt.colorcolumn = "80"
 	opt.laststatus = 3
-	opt.cmdheight = 0
 
 	-- Indentation
 	opt.tabstop = 4
@@ -58,6 +57,24 @@ function opts.init()
 
 	-- Clipboard
 	opt.clipboard = "unnamedplus"
+	-- Over SSH, or on a Linux box without any clipboard tool: copy through
+	-- OSC 52 (the terminal, e.g. kitty, sets the system clipboard) and paste
+	-- from Neovim's own register (no terminal query, so no wait/prompt).
+	local no_tool = vim.fn.has("linux") == 1
+		and vim.fn.executable("wl-copy") == 0
+		and vim.fn.executable("xclip") == 0
+		and vim.fn.executable("xsel") == 0
+	if vim.env.SSH_TTY or no_tool then
+		local osc52 = require("vim.ui.clipboard.osc52")
+		local function paste()
+			return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+		end
+		vim.g.clipboard = {
+			name = "osc52-copy",
+			copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+			paste = { ["+"] = paste, ["*"] = paste },
+		}
+	end
 
 	opt.undofile = true
 end

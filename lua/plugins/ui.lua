@@ -33,7 +33,6 @@ require("nvim-navic").setup({
 
 -- incline.nvim: floating filename in each window
 local helpers = require("incline.helpers")
-local devicons = require("nvim-web-devicons")
 
 -- 'mantle' color of the active catppuccin flavour (fallback if unavailable)
 local function mantle_bg()
@@ -51,9 +50,11 @@ require("incline").setup({
 		if filename == "" then
 			filename = "[No Name]"
 		end
-		local icon, color = devicons.get_icon_color(filename)
+		local icon, hl = MiniIcons.get("file", filename)
+		local fg = vim.api.nvim_get_hl(0, { name = hl, link = false }).fg
+		local color = fg and ("#%06x"):format(fg)
 		return {
-			icon and { " ", icon, " ", guibg = color, guifg = helpers.contrast_color(color) } or "",
+			color and { " ", icon, " ", guibg = color, guifg = helpers.contrast_color(color) } or "",
 			" ",
 			{ filename, gui = vim.bo[props.buf].modified and "bold,italic" or "bold" },
 			" ",
@@ -63,6 +64,15 @@ require("incline").setup({
 })
 
 local icons = require("utils.icons")
+
+-- filetype with its mini.icons glyph (lualine's own icon needs nvim-web-devicons)
+local function filetype()
+	local ft = vim.bo.filetype
+	if ft == "" then
+		return ""
+	end
+	return MiniIcons.get("filetype", ft) .. " " .. ft
+end
 
 -- set by plugins/format.lua via vim.b.active_formatters
 local function formatters()
@@ -112,7 +122,7 @@ require("lualine").setup({
 			},
 		},
 		lualine_c = { "filename" },
-		lualine_x = { formatters, linters, "encoding", "fileformat", "filetype" },
+		lualine_x = { formatters, linters, "encoding", "fileformat", filetype },
 		lualine_y = { "progress" },
 		lualine_z = { "location" },
 	},

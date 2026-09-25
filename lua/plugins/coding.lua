@@ -48,10 +48,6 @@ require("statuscol").setup({
 vim.keymap.set("n", "<leader>zc", "zc", { desc = "Close Fold (cursor)" })
 vim.keymap.set("n", "<leader>zo", "zo", { desc = "Open Fold (cursor)" })
 
--- mini.icons also impersonates nvim-web-devicons for the plugins that expect it
-require("mini.icons").setup()
-MiniIcons.mock_nvim_web_devicons()
-
 require("mini.pairs").setup()
 require("mini.cursorword").setup()
 

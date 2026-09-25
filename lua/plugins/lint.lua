@@ -45,7 +45,9 @@ vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
 			300,
 			0,
 			vim.schedule_wrap(function()
-				if vim.api.nvim_buf_is_valid(args.buf) then
+				-- try_lint always lints the CURRENT buffer: skip if the user switched
+				-- (the other buffer is re-linted on BufEnter)
+				if args.buf == vim.api.nvim_get_current_buf() then
 					lint(args.buf)
 				end
 			end)

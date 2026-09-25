@@ -8,7 +8,7 @@
 -- same rules. Each runs from the root of the config that enabled it.
 -- Project configs only: autopep8's global config (~/.config/pycodestyle) is ignored.
 local function has(path, file, text)
-	local f = io.open(vim.fs.joinpath(path, file)):
+	local f = io.open(vim.fs.joinpath(path, file))
 	if not f then
 		return false
 	end
