@@ -1,5 +1,8 @@
 -- mini.files: edit the buffer to create/rename/delete, then `=` to apply
-require("mini.files").setup()
+require("mini.files").setup({
+	-- directories (nvim ., :e dir/) open in the snacks explorer, not here
+	options = { use_as_default_explorer = false },
+})
 
 vim.api.nvim_create_autocmd("User", {
 	pattern = "MiniFilesBufferCreate",

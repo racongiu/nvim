@@ -96,9 +96,9 @@ keymap.set("n", "<leader>fhk", function()
 end, { desc = "Keymaps" })
 
 -- Notifications
-keymap.set("n", "<leader>snh", function()
+keymap.set("n", "<leader>nh", function()
 	Snacks.picker.notifications()
 end, { desc = "Notification History" })
-keymap.set("n", "<leader>snd", function()
+keymap.set("n", "<leader>nd", function()
 	Snacks.notifier.hide()
 end, { desc = "Dismiss Notifications" })

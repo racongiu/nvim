@@ -44,8 +44,6 @@ require("statuscol").setup({
 		{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
 	},
 })
-vim.keymap.set("n", "<leader>zc", "zc", { desc = "Close Fold (cursor)" })
-vim.keymap.set("n", "<leader>zo", "zo", { desc = "Open Fold (cursor)" })
 
 require("mini.pairs").setup()
 require("mini.cursorword").setup()

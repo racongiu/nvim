@@ -6,10 +6,8 @@ require("which-key").setup({
 		{ "<leader>e", group = "Explorer" },
 		{ "<leader>f", group = "Find" },
 		{ "<leader>fh", group = "Help" },
-		{ "<leader>s", group = "Search" },
-		{ "<leader>sn", group = "Notifications" },
-		{ "<leader>z", group = "Folds" },
-		{ "<leader>c", group = "LSP" },
+		{ "<leader>n", group = "Notifications" },
+		{ "<leader>c", group = "Code" }, -- LSP, format, fix, mason
 		{ "<leader>cw", group = "Workspace" },
 		{ "<leader>g", group = "Git" },
 	},

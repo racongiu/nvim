@@ -12,8 +12,6 @@ function opts.init()
 	vim.g.loaded_python3_provider = 0
 	vim.g.loaded_ruby_provider = 0
 
-	vim.g.netrw_banner = 0
-
 	-- Interface
 	opt.number = true
 	opt.relativenumber = true
@@ -26,6 +24,7 @@ function opts.init()
 	opt.scrolloff = 8
 	opt.colorcolumn = "80"
 	opt.laststatus = 3
+	opt.timeoutlen = 300 -- key-sequence delay (which-key popup)
 
 	-- Indentation
 	opt.tabstop = 4
@@ -36,9 +35,6 @@ function opts.init()
 	opt.ignorecase = true
 	opt.smartcase = true
 	opt.inccommand = "split"
-
-	-- Native completion only (blink.cmp ignores 'completeopt')
-	opt.completeopt = "menuone,noselect,fuzzy,nosort"
 
 	-- Files
 	opt.autowrite = true
@@ -53,7 +49,6 @@ function opts.init()
 	-- Mouse
 	opt.mouse = "a"
 	opt.mousescroll = "ver:3,hor:0"
-	opt.timeoutlen = 300
 
 	-- Clipboard
 	opt.clipboard = "unnamedplus"
