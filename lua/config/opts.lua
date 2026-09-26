@@ -24,6 +24,7 @@ function opts.init()
 	opt.scrolloff = 8
 	opt.colorcolumn = "80"
 	opt.laststatus = 3
+	opt.winborder = "rounded" -- every floating window (LSP hover, blink, mason...)
 	opt.timeoutlen = 300 -- key-sequence delay (which-key popup)
 
 	-- Indentation

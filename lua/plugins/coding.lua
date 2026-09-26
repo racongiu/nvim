@@ -32,17 +32,8 @@ vim.opt.fillchars:append({
 	foldopen = fold_icons.open,
 	foldclose = fold_icons.closed,
 	foldsep = " ",
-})
--- statuscol: redraw the fold column with the glyphs only -- the native
--- rendering falls back to fold-level DIGITS once nesting exceeds the
--- foldcolumn width (:h 'foldcolumn')
-local builtin = require("statuscol.builtin")
-require("statuscol").setup({
-	segments = {
-		{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-		{ text = { "%s" }, click = "v:lua.ScSa" },
-		{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-	},
+	-- nested levels that don't fit the 1-wide foldcolumn: blank, not digits (0.12)
+	foldinner = " ",
 })
 
 require("mini.pairs").setup()
@@ -67,10 +58,8 @@ cmp.setup({
 		documentation = {
 			auto_show = true,
 			auto_show_delay_ms = 200,
-			window = { border = "rounded" },
 		},
 		menu = {
-			border = "rounded",
 			min_width = 24,
 			max_height = 12,
 			draw = {

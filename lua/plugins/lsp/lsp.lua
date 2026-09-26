@@ -33,7 +33,6 @@ vim.list.unique(tools)
 require("mason").setup({
 	PATH = "append", -- project/system binaries first, mason as fallback
 	ui = {
-		border = "rounded",
 		icons = {
 			package_installed = "✓",
 			package_pending = "➜",
@@ -41,7 +40,24 @@ require("mason").setup({
 		},
 	},
 })
-require("mason-tool-installer").setup({ ensure_installed = tools })
+-- Install the lang files' tools that are missing (no-op once installed).
+-- The callback may run off the main loop: schedule it. An unknown name means a
+-- typo in a lang file, or no registry yet (first start offline): one warning.
+local registry = require("mason-registry")
+registry.refresh(vim.schedule_wrap(function()
+	local unknown = {}
+	for _, name in ipairs(tools) do
+		local ok, pkg = pcall(registry.get_package, name)
+		if not ok then
+			unknown[#unknown + 1] = name
+		elseif not pkg:is_installed() and not pkg:is_installing() then
+			pkg:install()
+		end
+	end
+	if #unknown > 0 then
+		vim.notify("mason: not in registry (offline or typo): " .. table.concat(unknown, ", "), vim.log.levels.WARN)
+	end
+end))
 
 vim.keymap.set("n", "<leader>cm", "<cmd>Mason<cr>", { desc = "Mason" })
 
