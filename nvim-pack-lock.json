@@ -4,10 +4,6 @@
       "rev": "213eed395eebe317700800daf26f476a8c94989c",
       "src": "https://github.com/Diogo-ss/42-header.nvim"
     },
-    "SchemaStore.nvim": {
-      "rev": "c87dda7c8e5c4437d0d270ea6b73afb683607706",
-      "src": "https://github.com/b0o/SchemaStore.nvim"
-    },
     "auto-dark-mode.nvim": {
       "rev": "54058b4fe414bd64bd2904a6f8a63f1f14e3d8df",
       "src": "https://github.com/f-person/auto-dark-mode.nvim"
@@ -15,11 +11,7 @@
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
-      "version": "1.0.0 - 2.0.0"
-    },
-    "blink.lib": {
-      "rev": "b127d48bf8e9ac9cf41f6e0fbead317503f76558",
-      "src": "https://github.com/saghen/blink.lib"
+      "version": "'v1.10.2'"
     },
     "catppuccin-nvim": {
       "rev": "0303a7208dba448c459767486a38a6ec05c4216b",

@@ -18,7 +18,6 @@ return {
 					reportMissingTypeStubs = "information",
 					reportMissingParameterType = "warning",
 					reportUnknownParameterType = "warning",
-					reportGeneralTypeIssues = "error",
 					reportOptionalMemberAccess = "warning",
 					reportOptionalSubscript = "warning",
 					reportPrivateImportUsage = "warning",

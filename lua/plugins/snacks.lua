@@ -53,7 +53,7 @@ require("snacks").setup({
 		enabled = true, -- also replaces vim.ui.select
 		sources = {
 			files = { hidden = true },
-			explorer = { hidden = true, ignored = false },
+			explorer = { hidden = true, ignored = true }, -- dotfiles + gitignored files
 		},
 		icons = {
 			kinds = icons.kinds,

@@ -1,5 +1,5 @@
 -- Python: basedpyright + tools enabled ONLY by the project's config.
---   ruff config   (ruff.toml, .ruff.toml, [tool.ruff] in pyproject.toml) -> ruff (format + lint)
+--   ruff config   (ruff.toml, .ruff.toml, [tool.ruff] in pyproject.toml) -> ruff (fix + format + lint)
 --   flake8 config (.flake8, [flake8] in setup.cfg / tox.ini)            -> autopep8 + flake8
 --   autopep8 config ([tool.autopep8] in pyproject.toml, .pep8, or a
 --     [pycodestyle] / [pep8] section in setup.cfg / tox.ini / .flake8)  -> autopep8
@@ -23,6 +23,10 @@ local function ruff_root(source)
 			or name == ".ruff.toml"
 			or (name == "pyproject.toml" and has(path, name, "[tool.ruff"))
 	end)
+end
+
+local function ruff_cwd(_, ctx)
+	return ruff_root(ctx.buf)
 end
 
 local function is_flake8_config(name, path)
@@ -53,12 +57,17 @@ return {
 	lsp = { "basedpyright" },
 	tools = { "basedpyright", "ruff", "autopep8", "flake8" },
 	formatters = { python = { "ruff_format", "autopep8", stop_after_first = true } },
+	fixers = { python = { "ruff_fix" } }, -- <leader>cx: every fix the project allows
+	save_fixers = { python = { "ruff_fix_save" } }, -- :w: same, minus deleting unused imports
 	custom_formatters = {
-		ruff_format = {
-			cwd = function(_, ctx)
-				return ruff_root(ctx.buf)
-			end,
+		ruff_format = { cwd = ruff_cwd, require_cwd = true },
+		ruff_fix = { cwd = ruff_cwd, require_cwd = true },
+		ruff_fix_save = {
+			inherit = "ruff_fix",
+			cwd = ruff_cwd,
 			require_cwd = true,
+			-- keeps an import you haven't used yet; adds to the project's unfixable list
+			append_args = { "--unfixable", "F401" },
 		},
 		autopep8 = {
 			cwd = function(_, ctx)

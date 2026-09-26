@@ -1,8 +1,5 @@
 require("which-key").setup({
-	preset = "helix",
-	win = {
-		border = "rounded",
-	},
+	preset = "helix", -- rounded border included
 	spec = {
 		{ "<leader>w", group = "Windows" },
 		{ "<leader>x", group = "Diagnostics" },

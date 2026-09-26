@@ -3,8 +3,8 @@
 -- Binaries come from PATH, not mason: pipx install norminette c-formatter-42
 local M = {}
 
--- conform definition: c_formatter_42 reads stdin, writes stdout
-M.c_formatter_42 = { command = "c_formatter_42", args = {}, stdin = true }
+-- conform definition: c_formatter_42 reads stdin, writes stdout (conform's defaults)
+M.c_formatter_42 = { command = "c_formatter_42" }
 
 -- norminette reports a VISUAL column (a tab advances to the next multiple of
 -- 4, 1-based); Neovim wants a 0-based byte index into the buffer line.
@@ -61,7 +61,6 @@ function M.norminette()
 	local filename = name ~= "" and vim.fn.fnamemodify(name, ":t") or ("untitled." .. ext)
 	return {
 		cmd = "norminette",
-		stdin = false,
 		append_fname = false, -- never lint the on-disk file: content comes from the buffer
 		args = {
 			"--no-colors",
@@ -70,7 +69,6 @@ function M.norminette()
 			"--filename",
 			filename,
 		},
-		stream = "stdout",
 		ignore_exitcode = true, -- exits 1 whenever errors are found
 		parser = parse_norminette,
 	}

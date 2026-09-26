@@ -7,7 +7,7 @@ local icons = require("utils.icons")
 vim.diagnostic.config({
 	severity_sort = true,
 	update_in_insert = true, -- refresh diagnostics while typing (LSP + nvim-lint)
-	virtual_text = false,
+	virtual_text = false, -- required by tiny-inline-diagnostic (don't rely on the default)
 	signs = {
 		text = {
 			[vim.diagnostic.severity.ERROR] = icons.diagnostics.error,
@@ -21,19 +21,14 @@ vim.diagnostic.config({
 -- LSP engine: aggregates plugins/lang/*.lua, installs binaries via mason and
 -- enables the servers. Server configs are standalone files in nvim/lsp/*.lua
 -- (no nvim-lspconfig).
-local servers, tools, seen = {}, {}, {}
+local servers, tools = {}, {}
 for _, lang in ipairs(require("utils.langs").list()) do
-	for _, server in ipairs(lang.lsp or {}) do
-		if not seen[server] then -- a server may be shared by several langs
-			seen[server] = true
-			servers[#servers + 1] = server
-		end
-	end
+	vim.list_extend(servers, lang.lsp or {})
 	vim.list_extend(tools, lang.tools or {})
-	if lang.setup then
-		lang.setup()
-	end
 end
+-- a server or a mason tool may be shared by several langs (e.g. yamlls)
+vim.list.unique(servers)
+vim.list.unique(tools)
 
 require("mason").setup({
 	PATH = "append", -- project/system binaries first, mason as fallback

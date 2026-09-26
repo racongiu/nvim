@@ -54,13 +54,3 @@ vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
 		)
 	end,
 })
-
--- On-demand re-lint, emitted by plugins/format.lua once a manual format finishes
--- (the debounced TextChanged autocmd above also covers it, 300 ms later).
-vim.api.nvim_create_autocmd("User", {
-	pattern = "LintRefresh",
-	group = group,
-	callback = function()
-		lint(vim.api.nvim_get_current_buf())
-	end,
-})

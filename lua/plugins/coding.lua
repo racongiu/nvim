@@ -20,11 +20,10 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Native treesitter folds; high foldlevel = everything open on load.
+-- Native treesitter folds; foldlevelstart 99 = everything open on load.
 -- Filetypes without a parser simply get no folds
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 -- fold indicators in the gutter (glyphs from utils/icons)
 local fold_icons = require("utils.icons").fold

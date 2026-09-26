@@ -1,6 +1,6 @@
 -- Central language toggle, consumed by utils/langs.lua.
 -- false disables the whole stack of a plugins/lang/<name>.lua file
--- (LSP, mason tools, formatters, linters, setup hook); an absent
+-- (LSP, mason tools, formatters, linters); an absent
 -- entry means enabled. Mason binaries are not uninstalled.
 --
 -- Removed stacks (ansible, css, docker, html, json, toml, typescript,
