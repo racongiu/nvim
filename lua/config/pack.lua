@@ -34,12 +34,11 @@ function pack.init()
 			{ src = "https://github.com/catppuccin/nvim", name = "catppuccin-nvim" },
 			{ src = "https://github.com/f-person/auto-dark-mode.nvim" },
 
-			-- UI (ui.lua, markdown.lua)
+			-- UI (ui.lua)
 			{ src = "https://github.com/folke/which-key.nvim" },
 			{ src = "https://github.com/nvim-lualine/lualine.nvim" },
 			{ src = "https://github.com/b0o/incline.nvim" },
 			{ src = "https://github.com/SmiteshP/nvim-navic" },
-			{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 			{ src = "https://github.com/rachartier/tiny-cmdline.nvim" }, -- cmdline.lua
 
 			-- Editing (coding.lua)
@@ -69,6 +68,15 @@ function pack.init()
 		})
 	end)
 
+	-- Plugins used by a single language (plugins/lang/*.lua `plugins` field).
+	-- Added after the main list: lang files require main-list plugins (conform.util in lang/c.lua)
+	safe("lang plugins", function()
+		local specs = require("utils.langs").plugins()
+		if #specs > 0 then
+			vim.pack.add(specs)
+		end
+	end)
+
 	-- File/filetype icons for every plugin (snacks, which-key, render-markdown,
 	-- incline, lualine all call MiniIcons directly: no nvim-web-devicons mock)
 	safe("mini.icons", function()
@@ -78,6 +86,11 @@ function pack.init()
 	import("plugins")
 	import("plugins.colorschemes")
 	import("plugins.lsp")
+
+	-- Language-specific plugin config (plugins/lang/*.lua `setup` field)
+	safe("lang setup", function()
+		require("utils.langs").setup()
+	end)
 end
 
 return pack

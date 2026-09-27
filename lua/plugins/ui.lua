@@ -3,10 +3,10 @@ require("which-key").setup({
 	spec = {
 		{ "<leader>w", group = "Windows" },
 		{ "<leader>x", group = "Diagnostics" },
-		{ "<leader>e", group = "Explorer" },
 		{ "<leader>f", group = "Find" },
 		{ "<leader>fh", group = "Help" },
-		{ "<leader>n", group = "Notifications" },
+		{ "<leader>s", group = "Search" }, -- restart, explorer, notifications
+		{ "<leader>sn", group = "Notifications" },
 		{ "<leader>c", group = "Code" }, -- LSP, format, fix, mason
 		{ "<leader>cw", group = "Workspace" },
 		{ "<leader>g", group = "Git" },

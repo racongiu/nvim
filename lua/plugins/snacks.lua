@@ -95,10 +95,15 @@ keymap.set("n", "<leader>fhk", function()
 	Snacks.picker.keymaps()
 end, { desc = "Keymaps" })
 
+-- Explorer (sidebar)
+keymap.set("n", "<leader>se", function()
+	Snacks.explorer()
+end, { desc = "Explorer" })
+
 -- Notifications
-keymap.set("n", "<leader>nh", function()
+keymap.set("n", "<leader>snh", function()
 	Snacks.picker.notifications()
 end, { desc = "Notification History" })
-keymap.set("n", "<leader>nd", function()
+keymap.set("n", "<leader>snd", function()
 	Snacks.notifier.hide()
 end, { desc = "Dismiss Notifications" })

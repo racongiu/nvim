@@ -3,7 +3,7 @@ local keymaps = {}
 function keymaps.init()
 	local keymap = vim.keymap
 
-	keymap.set("n", "<leader>re", "<cmd>restart<cr>", { desc = "Restart Neovim (:restart)" })
+	keymap.set("n", "<leader>sr", "<cmd>restart<cr>", { desc = "Restart Neovim (:restart)" })
 
 	keymap.set("n", "<up>", "<nop>", { silent = true })
 	keymap.set("n", "<down>", "<nop>", { silent = true })
