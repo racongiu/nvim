@@ -22,14 +22,13 @@ function opts.init()
 	opt.listchars:append("eol:↴")
 	opt.guicursor = ""
 	opt.scrolloff = 8
-	opt.colorcolumn = "80"
 	opt.laststatus = 3
 	opt.winborder = "rounded" -- every floating window (LSP hover, blink, mason...)
 	opt.timeoutlen = 300 -- key-sequence delay (which-key popup)
 
 	-- Indentation
 	opt.tabstop = 4
-	opt.softtabstop = 4
+	opt.softtabstop = -1 -- follow shiftwidth
 	opt.shiftwidth = 4
 
 	-- Search
