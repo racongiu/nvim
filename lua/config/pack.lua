@@ -49,6 +49,7 @@ function pack.init()
 			-- blink downloads its prebuilt fuzzy binary itself.
 			{ src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
 			{ src = "https://github.com/rafamadriz/friendly-snippets" },
+			{ src = "https://github.com/windwp/nvim-ts-autotag" },
 
 			-- LSP and tools (plugins/lsp/, lsp/)
 			{ src = "https://github.com/mason-org/mason.nvim" },

@@ -49,6 +49,8 @@ vim.opt.fillchars:append({
 })
 
 require("mini.pairs").setup()
+-- auto-close and auto-rename html/jsx/tsx tags (tree-sitter based)
+require("nvim-ts-autotag").setup()
 require("mini.cursorword").setup()
 
 local cmp = require("blink.cmp")
