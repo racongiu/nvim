@@ -10,7 +10,7 @@ local group = vim.api.nvim_create_augroup("c-colorcolumn", { clear = false })
 
 local function update()
 	local too_long = vim.fn.search([[\%>80v.]], "nw") > 0
-	vim.wo.colorcolumn = too_long and "81" or ""
+	vim.opt_local.colorcolumn = too_long and "81" or ""
 end
 
 vim.api.nvim_clear_autocmds({ group = group, buffer = buf })
