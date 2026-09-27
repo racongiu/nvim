@@ -3,14 +3,17 @@
 -- (LSP, mason tools, formatters, linters); an absent
 -- entry means enabled. Mason binaries are not uninstalled.
 --
--- Removed stacks (ansible, css, docker, html) live in _archive/:
+-- Removed stacks (ansible, docker) live in _archive/:
 -- see _archive/README.md to re-enable them.
 return {
 	c = true,
+	css = true,
+	html = true,
 	json = true,
 	lua = true,
 	markdown = true,
 	python = true,
+	shell = true,
 	toml = true,
 	typescript = true,
 	yaml = true,

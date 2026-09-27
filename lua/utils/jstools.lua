@@ -1,7 +1,21 @@
--- JS/TS/JSON tools, shared by plugins/lang/typescript.lua, json.lua and yaml.lua.
+-- Web tools (biome, prettier, eslint, stylelint), shared by plugins/lang/
+-- typescript.lua, json.lua, yaml.lua, html.lua and css.lua.
 -- Rule: a tool runs only when the project configures it; a biome config
--- replaces prettier and eslint.
+-- replaces prettier, eslint and stylelint, but only for the filetypes biome
+-- supports (scss, less, yaml stay with prettier/stylelint).
 local M = {}
+
+-- filetypes biome formats and lints (html: the project must opt in, in biome.json)
+local biome_fts = {
+	javascript = true,
+	javascriptreact = true,
+	typescript = true,
+	typescriptreact = true,
+	json = true,
+	jsonc = true,
+	css = true,
+	html = true,
+}
 
 local function has(path, file, text)
 	local f = io.open(vim.fs.joinpath(path, file))
@@ -13,31 +27,37 @@ local function has(path, file, text)
 	return hit
 end
 
-local function biome_root(source)
-	return vim.fs.root(source, { "biome.json", "biome.jsonc", ".biome.json", ".biome.jsonc" })
-end
-
-local function prettier_root(source)
-	if biome_root(source) then
+-- biome config root, only when biome handles this buffer's filetype
+local function biome_root(buf)
+	if not biome_fts[vim.bo[buf].filetype] then
 		return nil
 	end
-	return vim.fs.root(source, function(name, path)
-		return name:find("^%.prettierrc") ~= nil
-			or name:find("^prettier%.config%.") ~= nil
-			or (name == "package.json" and has(path, name, '"prettier"'))
-	end)
+	return vim.fs.root(buf, { "biome.json", "biome.jsonc", ".biome.json", ".biome.jsonc" })
 end
 
-local function eslint_root(source)
-	if biome_root(source) then
-		return nil
+-- a config root found by `match(name)` or by `key` in package.json; nil when biome owns the buffer
+local function config_root(match, key)
+	return function(buf)
+		if biome_root(buf) then
+			return nil
+		end
+		return vim.fs.root(buf, function(name, path)
+			return match(name) or (name == "package.json" and has(path, name, key))
+		end)
 	end
-	return vim.fs.root(source, function(name, path)
-		return name:find("^eslint%.config%.") ~= nil
-			or name:find("^%.eslintrc") ~= nil
-			or (name == "package.json" and has(path, name, '"eslintConfig"'))
-	end)
 end
+
+local prettier_root = config_root(function(name)
+	return name:find("^%.prettierrc") ~= nil or name:find("^prettier%.config%.") ~= nil
+end, '"prettier"')
+
+local eslint_root = config_root(function(name)
+	return name:find("^eslint%.config%.") ~= nil or name:find("^%.eslintrc") ~= nil
+end, '"eslintConfig"')
+
+local stylelint_root = config_root(function(name)
+	return name:find("^%.stylelintrc") ~= nil or name:find("^stylelint%.config%.") ~= nil
+end, '"stylelint"')
 
 local function cwd(root)
 	return function(_, ctx)
@@ -55,9 +75,10 @@ M.custom_formatters = {
 	["biome-check"] = { cwd = cwd(biome_root), require_cwd = true }, -- fix + format
 	prettier = { cwd = cwd(prettier_root), require_cwd = true },
 	eslint_d = { cwd = cwd(eslint_root), require_cwd = true }, -- eslint --fix
+	stylelint = { cwd = cwd(stylelint_root), require_cwd = true }, -- stylelint --fix
 }
 
--- nvim-lint
+-- nvim-lint: JS/TS
 function M.linters(bufnr)
 	if biome_root(bufnr) then
 		return { "biomejs" }
@@ -66,6 +87,22 @@ function M.linters(bufnr)
 		return { "eslint_d" }
 	end
 	return {}
+end
+
+-- nvim-lint: CSS/SCSS/LESS
+function M.css_linters(bufnr)
+	if biome_root(bufnr) then
+		return { "biomejs" }
+	end
+	if stylelint_root(bufnr) then
+		return { "stylelint" }
+	end
+	return {}
+end
+
+-- nvim-lint: HTML (biome only; no project-configured html linter otherwise)
+function M.html_linters(bufnr)
+	return biome_root(bufnr) and { "biomejs" } or {}
 end
 
 -- nvim-lint's built-ins look for ./node_modules/.bin in Neovim's cwd only: use
@@ -83,6 +120,7 @@ end
 M.custom_linters = {
 	biomejs = from_root("biomejs", biome_root, "biome"),
 	eslint_d = from_root("eslint_d", eslint_root, "eslint_d"),
+	stylelint = from_root("stylelint", stylelint_root, "stylelint"),
 }
 
 return M

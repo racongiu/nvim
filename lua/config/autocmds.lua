@@ -1,6 +1,10 @@
 local autocmds = {}
 
 function autocmds.init()
+	-- Line-length bar: 80 by default (42 norm, Prettier, clang-format, yamllint...);
+	-- after/ftplugin overrides it with vim.b.overlength (python 79, lua 120, markdown off)
+	require("utils.overlength").setup(80)
+
 	vim.api.nvim_create_autocmd("TextYankPost", {
 		group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
 		desc = "Highlight when yanking (copying) text",

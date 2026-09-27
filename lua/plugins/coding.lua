@@ -5,18 +5,22 @@
 -- (c, lua...) still work, the rest falls back to regex syntax
 if vim.fn.executable("tree-sitter") == 1 then
 	require("nvim-treesitter").install({
+		"bash",
 		"c",
 		"cpp",
+		"css",
 		"html",
 		"javascript",
 		"json",
 		"lua",
 		"python",
 		"regex",
+		"scss",
 		"toml",
 		"tsx",
 		"typescript",
 		"yaml",
+		"zsh",
 	})
 end
 
