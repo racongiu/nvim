@@ -10,12 +10,37 @@ for _, lang in ipairs(require("utils.langs").list()) do
 	end
 end
 
+-- Binary lookup (utils/bin.lua): project install, then $PATH, then mason.
+-- Each linter used is wrapped once so that a plain-name `cmd` is resolved per run.
+local bin = require("utils.bin")
+local wrapped = {}
+local function project_first(name)
+	if wrapped[name] then
+		return
+	end
+	wrapped[name] = true
+	local def = require("lint").linters[name]
+	if def == nil then
+		return
+	end
+	require("lint").linters[name] = function()
+		local d = type(def) == "function" and def() or vim.deepcopy(def)
+		if type(d.cmd) == "string" then
+			d.cmd = bin.resolve(vim.api.nvim_get_current_buf(), d.cmd)
+		end
+		return d
+	end
+end
+
 local function lint(buf)
 	local linters = linters_by_ft[vim.bo[buf].filetype]
 	if type(linters) == "function" then
 		linters = linters(buf)
 	end
 	if linters and #linters > 0 then
+		for _, name in ipairs(linters) do
+			project_first(name)
+		end
 		vim.b[buf].active_linter = table.concat(linters, ", ") -- read by the statusline
 		require("lint").try_lint(linters, { ignore_errors = true }) -- missing binary or crash: no notification
 	else

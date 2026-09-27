@@ -4,6 +4,10 @@
       "rev": "213eed395eebe317700800daf26f476a8c94989c",
       "src": "https://github.com/Diogo-ss/42-header.nvim"
     },
+    "SchemaStore.nvim": {
+      "rev": "01fde7d0be29913dd57ad108139a28ec3efdcd0e",
+      "src": "https://github.com/b0o/SchemaStore.nvim"
+    },
     "auto-dark-mode.nvim": {
       "rev": "54058b4fe414bd64bd2904a6f8a63f1f14e3d8df",
       "src": "https://github.com/f-person/auto-dark-mode.nvim"
@@ -66,6 +70,10 @@
     "snacks.nvim": {
       "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
       "src": "https://github.com/folke/snacks.nvim"
+    },
+    "tiny-cmdline.nvim": {
+      "rev": "d83700b48d8ff5625dbef4029af071db559544e5",
+      "src": "https://github.com/rachartier/tiny-cmdline.nvim"
     },
     "tiny-inline-diagnostic.nvim": {
       "rev": "680762989e8b05a72e90769959d0fb9a557e6917",

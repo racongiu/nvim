@@ -7,8 +7,16 @@ if vim.fn.executable("tree-sitter") == 1 then
 	require("nvim-treesitter").install({
 		"c",
 		"cpp",
+		"html",
+		"javascript",
+		"json",
 		"lua",
 		"python",
+		"regex",
+		"toml",
+		"tsx",
+		"typescript",
+		"yaml",
 	})
 end
 

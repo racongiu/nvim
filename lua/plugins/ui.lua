@@ -117,7 +117,7 @@ require("lualine").setup({
 			},
 		},
 		lualine_c = { "filename" },
-		lualine_x = { formatters, linters, "encoding", "fileformat", filetype },
+		lualine_x = { "%S", formatters, linters, "encoding", "fileformat", filetype }, -- %S: pending keys
 		lualine_y = { "progress" },
 		lualine_z = { "location" },
 	},

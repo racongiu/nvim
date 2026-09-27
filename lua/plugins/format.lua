@@ -19,6 +19,34 @@ for _, lang in ipairs(require("utils.langs").list()) do
 	end
 end
 
+-- Binary lookup (utils/bin.lua): project install, then $PATH, then mason.
+-- Applied to every formatter whose command is a plain name; function commands
+-- (conform's node_modules lookup for prettier/biome) already search the project.
+local bin = require("utils.bin")
+local used = {}
+for _, by_ft in ipairs({ formatters_by_ft, fixers, save_fixers }) do
+	for _, names in pairs(by_ft) do
+		for _, name in ipairs(names) do
+			used[name] = true
+		end
+	end
+end
+for name in pairs(used) do
+	local def = custom_formatters[name] or {}
+	local command = def.command
+	if not command then
+		local ok, builtin = pcall(require, "conform.formatters." .. (type(def.inherit) == "string" and def.inherit or name))
+		command = ok and builtin.command or nil
+	end
+	if type(command) == "string" then
+		custom_formatters[name] = vim.tbl_extend("force", def, {
+			command = function(_, ctx)
+				return bin.resolve(ctx.buf, command)
+			end,
+		})
+	end
+end
+
 local conform = require("conform")
 
 -- The buffer's fixers that its project enables, then its formatters: fix first,

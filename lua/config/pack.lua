@@ -26,28 +26,45 @@ end
 function pack.init()
 	safe("vim.pack.add", function()
 		vim.pack.add({
-			{ src = "https://github.com/f-person/auto-dark-mode.nvim" },
-			{ src = "https://github.com/catppuccin/nvim", name = "catppuccin-nvim" },
-			{ src = "https://github.com/nvim-mini/mini.nvim", version = "stable" },
-			{ src = "https://github.com/folke/which-key.nvim" },
-			{ src = "https://github.com/b0o/incline.nvim" },
+			-- Core: used across the whole config
 			{ src = "https://github.com/folke/snacks.nvim" },
+			{ src = "https://github.com/nvim-mini/mini.nvim", version = "stable" },
+
+			-- Colorscheme (plugins/colorschemes/)
+			{ src = "https://github.com/catppuccin/nvim", name = "catppuccin-nvim" },
+			{ src = "https://github.com/f-person/auto-dark-mode.nvim" },
+
+			-- UI (ui.lua, markdown.lua)
+			{ src = "https://github.com/folke/which-key.nvim" },
 			{ src = "https://github.com/nvim-lualine/lualine.nvim" },
-			{ src = "https://github.com/lewis6991/gitsigns.nvim" },
-			{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+			{ src = "https://github.com/b0o/incline.nvim" },
 			{ src = "https://github.com/SmiteshP/nvim-navic" },
-			{ src = "https://github.com/christoomey/vim-tmux-navigator" }, -- no config file
-			{ src = "https://github.com/Diogo-ss/42-header.nvim" },
+			{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+			{ src = "https://github.com/rachartier/tiny-cmdline.nvim" }, -- cmdline.lua
+
+			-- Editing (coding.lua)
+			{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 			-- pinned to the last v1 tag: a "1.*" range would also accept a 2.0
 			-- pre-release (v2 needs blink.lib + a build step). On a release tag
 			-- blink downloads its prebuilt fuzzy binary itself.
 			{ src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
 			{ src = "https://github.com/rafamadriz/friendly-snippets" },
+
+			-- LSP and tools (plugins/lsp/, lsp/)
 			{ src = "https://github.com/mason-org/mason.nvim" },
+			{ src = "https://github.com/b0o/SchemaStore.nvim" }, -- data only (no setup): read by lsp/jsonls.lua and lsp/yamlls.lua
+			{ src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
+
+			-- Formatting and linting (format.lua, lint.lua)
 			{ src = "https://github.com/stevearc/conform.nvim" },
 			{ src = "https://github.com/mfussenegger/nvim-lint" },
-			{ src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
-			{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+
+			-- Git (git.lua)
+			{ src = "https://github.com/lewis6991/gitsigns.nvim" },
+
+			-- Navigation and 42
+			{ src = "https://github.com/christoomey/vim-tmux-navigator" }, -- no config file
+			{ src = "https://github.com/Diogo-ss/42-header.nvim" },
 		})
 	end)
 
